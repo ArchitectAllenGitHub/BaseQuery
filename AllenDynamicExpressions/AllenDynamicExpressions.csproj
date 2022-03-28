@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>BaseQuery</PackageId>
+    <Authors>Allen</Authors>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>生成基础的查询条件;convention over configuration
+	</Description>
+    <PackageTags>BaseQuery;Expression;</PackageTags>
+    <PackageProjectUrl>https://gitee.com/ArchitectAllen/sql-sugar-demo.git</PackageProjectUrl>
+    <RepositoryUrl>https://gitee.com/ArchitectAllen/sql-sugar-demo.git</RepositoryUrl>
+    <RepositoryType>gitee</RepositoryType>
+  </PropertyGroup>
+
+</Project>
