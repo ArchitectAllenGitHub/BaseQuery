@@ -18,7 +18,7 @@ namespace xUnitTest
             services.AddTransient<ISqlSugarClient>(_ => new SqlSugarScope(new ConnectionConfig()
             {
                 //ConfigId="db01"  多租户用到
-                ConnectionString = "Server=172.18.143.215;Database=SqlSugarDemo;Uid=root;Pwd=123456;",
+                ConnectionString = "Server=172.25.184.123;Database=SqlSugarDemo;Uid=root;Pwd=123456;",
                 DbType = DbType.MySql,
                 IsAutoCloseConnection = true//自动释放
             }));
@@ -59,7 +59,9 @@ namespace xUnitTest
                     CreateDate = new DateTime(2022, 03, 20, 14, 40, 14),
                     CreateUserId = "123",
                     UpdateDate = new DateTime(2022, 03, 20, 14, 40, 14),
-                    UpdateUserId = "123"
+                    UpdateUserId = "123",
+                    Adress="xxx",
+                    Category=SchoolCategoryEnum.PrimarySchool,
                 };
                 db.Insertable(input).ExecuteCommand();
             }

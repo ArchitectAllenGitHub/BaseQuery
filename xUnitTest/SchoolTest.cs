@@ -45,7 +45,7 @@ namespace xUnitTest
 
             var res = _baseDynamic.GetExpression(input);
             var sql = _sqlSugarClient.Queryable<SchoolEntity>().WhereIF(res.Condition, res.Expression).ToSql();
-            Assert.Equal("SELECT `Name`,`Code`,`Adress`,`Category`,`Id`,`CreateDate`,`CreateUserId`,`UpdateDate`,`UpdateUserId` FROM ` School`  WHERE ((((((`Category` IN (3,0)) AND( `Name` = @Name1 )) AND ( `Code` = @Code2 )) AND ( `Category` = @Category3 )) AND ( `CreateDate` = @CreateDate4 )) AND ( `CreateUserId` = @CreateUserId5 )) ", sql.Key);
+            Assert.Equal("SELECT `Name`,`Code`,`Adress`,`Category`,`Id`,`CreateDate`,`CreateUserId`,`UpdateDate`,`UpdateUserId` FROM `School`  WHERE ((((((`Category` IN (3,0)) AND( `Name` = @Name1 )) AND ( `Code` = @Code2 )) AND ( `Category` = @Category3 )) AND ( `CreateDate` = @CreateDate4 )) AND ( `CreateUserId` = @CreateUserId5 )) ", sql.Key);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace xUnitTest
                 .LeftJoin<StudentEntity>((a, b) => a.Id == b.SchoolId)
                 .WhereIF(res.Condition, res.Expression).ToSql();
 
-            Assert.Equal("SELECT `a`.`Name`,`a`.`Code`,`a`.`Adress`,`a`.`Category`,`a`.`Id`,`a`.`CreateDate`,`a`.`CreateUserId`,`a`.`UpdateDate`,`a`.`UpdateUserId` FROM ` School` a Left JOIN `Student` b ON ( `a`.`Id` = `b`.`SchoolId` )   WHERE ((((((`a`.`Category` IN (3,0)) AND( `a`.`Name` = @Name1 )) AND ( `a`.`Code` = @Code2 )) AND ( `a`.`Category` = @Category3 )) AND ( `a`.`CreateDate` = @CreateDate4 )) AND ( `a`.`CreateUserId` = @CreateUserId5 )) ", sql.Key);
+            Assert.Equal("SELECT `a`.`Name`,`a`.`Code`,`a`.`Adress`,`a`.`Category`,`a`.`Id`,`a`.`CreateDate`,`a`.`CreateUserId`,`a`.`UpdateDate`,`a`.`UpdateUserId` FROM `School` a Left JOIN `Student` b ON ( `a`.`Id` = `b`.`SchoolId` )   WHERE ((((((`a`.`Category` IN (3,0)) AND( `a`.`Name` = @Name1 )) AND ( `a`.`Code` = @Code2 )) AND ( `a`.`Category` = @Category3 )) AND ( `a`.`CreateDate` = @CreateDate4 )) AND ( `a`.`CreateUserId` = @CreateUserId5 )) ", sql.Key);
         }
     }
 }
