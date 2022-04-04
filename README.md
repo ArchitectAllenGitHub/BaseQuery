@@ -67,8 +67,52 @@ dotnet add package BaseQuery
 
 #### 查询实体命名规范说明
 - 首先,正确的Linq查询,是建立在类型一致的基础上的.所以关联的字段,类型必须一致
-- `=`:名称相同
-- `Contains(Like)`:名称相同+入参字段后缀`Contains` 
+- `=`:名称类型一致
+- `Contains(Like)`:类型一致+后缀`Contains`
 - `StartsWith`:名称相同+入参字段后缀`StartsWith`
 - `EndsWith`:名称相同+入参字段后缀`EndsWith`
 - 集合(IN): 名称相同+入参字段后缀`_Contains`
+
+``` C#
+    /// <summary>
+    /// 实体
+    /// </summary>
+ public class SchoolEntity
+    {
+        /// <summary>
+        /// 学校名称
+        /// </summary>
+        public string Name { get; set; }
+    }
+
+    /// <summary>
+    /// 查询入参
+    /// </summary>
+ public class SchoolQueryInput
+    {
+        /// <summary>
+        /// =名称类型一致
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 类型一致+后缀Contains
+        /// </summary>
+        public string NameContains { get; set; }
+
+        /// <summary>
+        /// 类型一致+后缀StartsWith
+        /// </summary>
+        public string NameStartsWith { get; set; }
+
+        /// <summary>
+        /// 类型一致+后缀EndsWith
+        /// </summary>
+        public string NameEndsWith { get; set; }
+
+        /// <summary>
+        /// 类型一致+后缀_Contains
+        /// </summary>
+        public List<string> Name_Contains { get; set; }
+    }
+```
