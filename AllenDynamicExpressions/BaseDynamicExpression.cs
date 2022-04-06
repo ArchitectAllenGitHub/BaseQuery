@@ -1,5 +1,7 @@
 ﻿using AllenDynamicExpressions.Expressions;
 using AllenDynamicExpressions.Model;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace AllenDynamicExpressions
@@ -28,22 +30,22 @@ namespace AllenDynamicExpressions
         /// <summary>
         /// 缓存内容
         /// </summary>
-        private static readonly CacheAll _Chache = new();
+        private static readonly CacheAll _Chache = new CacheAll();
 
         /// <summary>
         /// 条件集合
         /// </summary>
         private List<Expression<Func<T, bool>>> _expressionList = new List<Expression<Func<T, bool>>>();
 
-        /// <summary>
-        /// 获取排序表达式目录树
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public IEnumerable<AllenOrderByExpressionResult<T>> GetOrderBy(IEnumerable<OrderByEntity> input)
-        {
-            return OrderByExpression.GetOrderBy<T>(input);
-        }
+        ///// <summary>
+        ///// 获取排序表达式目录树
+        ///// </summary>
+        ///// <param name="input"></param>
+        ///// <returns></returns>
+        //public IEnumerable<AllenOrderByExpressionResult<T>> GetOrderBy(IEnumerable<OrderByEntity> input)
+        //{
+        //    return OrderByExpression.GetOrderBy<T>(input);
+        //}
 
         /// <summary>
         /// 获取表达式目录树
@@ -52,7 +54,7 @@ namespace AllenDynamicExpressions
         /// <returns></returns>
         public AllenExpressionResult<T> GetExpression(I i)
         {
-            Expression<Func<T, bool>> expression = null;
+            Expression<Func<T, bool>> expression;
             foreach (var item in _Chache.PropertyInfoChache)
             {
                 var value = item.Value.IPropertyInfo.GetValue(i);

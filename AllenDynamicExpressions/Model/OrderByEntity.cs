@@ -18,10 +18,10 @@ namespace AllenDynamicExpressions.Model
         [Required]
         public string OrderField { get; set; }
 
-        /// <summary>
-        /// 是否升序
-        /// </summary>
-        [Required]
-        public bool Ascending { get; set; }
+        ///// <summary>
+        ///// 是否升序
+        ///// </summary>
+        //[Required]
+        //public bool Ascending { get; set; }
     }
 }

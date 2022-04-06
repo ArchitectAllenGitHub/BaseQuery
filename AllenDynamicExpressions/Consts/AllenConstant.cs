@@ -27,7 +27,7 @@ namespace AllenDynamicExpressions.Consts
         /// <summary>
         /// String方法
         /// </summary>
-        public static readonly ConcurrentDictionary<string, MethodInfo> StringContainsMethods = new();
+        public static readonly ConcurrentDictionary<string, MethodInfo> StringContainsMethods = new ConcurrentDictionary<string, MethodInfo>();
 
         public const string Contains = "Contains";
 

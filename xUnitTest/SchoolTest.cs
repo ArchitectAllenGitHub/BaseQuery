@@ -31,7 +31,7 @@ namespace xUnitTest
         //[Fact]
         [Theory]
         [InlineData("XX第二小学", 2, "2022-3-22 16:15:00", "admin")]
-        public async Task TestGetEntity(string name, int code, DateTime createDate, string createUserId)
+        public void TestGetEntity(string name, int code, DateTime createDate, string createUserId)
         {
             var input = new SchoolQueryInput
             {
@@ -58,7 +58,7 @@ namespace xUnitTest
         /// <returns></returns>
         [Theory]
         [InlineData("XX第二小学", 2, "2022-3-22 16:15:00", "admin")]
-        public async Task TestGetEntityByJoin(string name, int code, DateTime createDate, string createUserId)
+        public void TestGetEntityByJoin(string name, int code, DateTime createDate, string createUserId)
         {
             var input = new SchoolQueryInput
             {

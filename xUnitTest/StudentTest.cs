@@ -18,7 +18,7 @@ namespace xUnitTest
         /// <summary>
         /// 所有查询参数
         /// </summary>
-        private readonly StudentQueryInput _StudentQueryInput;
+        private readonly StudentQueryInput _StudentQueryInput = new();
 
         public StudentTest(ISqlSugarClient sqlSugarClient, BaseDynamicExpression<StudentEntity, StudentQueryInput> baseDynamic)
         {
