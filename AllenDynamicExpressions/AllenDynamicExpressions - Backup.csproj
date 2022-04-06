@@ -11,12 +11,9 @@
 			生成基础的查询条件;convention over configuration
 		</Description>
 		<PackageTags>BaseQuery;Expression;</PackageTags>
-		<PackageProjectUrl></PackageProjectUrl>
-		<RepositoryUrl>https://gitee.com/ArchitectAllen/base-query.git</RepositoryUrl>
+		<PackageProjectUrl>https://gitee.com/ArchitectAllen/sql-sugar-demo.git</PackageProjectUrl>
+		<RepositoryUrl>https://gitee.com/ArchitectAllen/sql-sugar-demo.git</RepositoryUrl>
 		<RepositoryType>gitee</RepositoryType>
-		<AssemblyVersion>1.0.1</AssemblyVersion>
-		<FileVersion>1.0.1</FileVersion>
-		<Version>1.0.1</Version>
 	</PropertyGroup>
 
 </Project>

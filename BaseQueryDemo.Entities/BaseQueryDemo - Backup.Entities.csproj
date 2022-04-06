@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
@@ -7,7 +7,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\BaseQueryDemo.Entities\BaseQueryDemo.Entities.csproj" />
+		<PackageReference Include="SqlSugarCore" Version="5.0.6.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\AllenDynamicExpressions\AllenDynamicExpressions.csproj" />
 	</ItemGroup>
 
 </Project>
