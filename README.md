@@ -155,7 +155,7 @@ builder.Services.AddSingleton<ISqlSugarClient>(_ => new SqlSugarScope(new Connec
     }
 ```
 
-##### 完整封装实例
+##### 完整封装示例
 
 3.  以SqlSugar为例
 ``` C#
