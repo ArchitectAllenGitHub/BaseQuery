@@ -4,7 +4,7 @@
 QueryBase 可以结合多款ORM框架使用.如果你为重复的写着ORM的查询表达式而苦恼,那么你需要的正是这样一个框架.基础的查询条件都帮你封装好了.额外的条件,可以只用增加查询实体的属性来控制,本着`约定大于配置的理念`,不做任何配置,只从命名规范上去区分,直观简洁明了.以最简单的方式开发.
 
 #### 使用说明
-
+##### QuickStart
 1.添加包源地址
 ``` shell
 https://www.myget.org/F/basequery/api/v3/index.json
@@ -13,6 +13,160 @@ https://www.myget.org/F/basequery/api/v3/index.json
 ``` shell
 dotnet add package BaseQuery
 ```
+3. 添加ORM,以SqlSugar为例
+``` shell
+dotnet add package SqlSugarCore
+```
+4.添加如下实体
+``` C#
+    /// <summary>
+    /// 学生实体
+    /// </summary>
+    [SugarTable("Student", TableDescription = "学生表")]
+    public class StudentEntity
+    {
+        /// <summary>
+        /// 姓名
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 学号
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
+        /// 年龄
+        /// </summary>
+        public int? Age { get; set; }
+
+        /// <summary>
+        /// 性别
+        /// </summary>
+        [SugarColumn(IsNullable = true)]
+        public int? Sex { get; set; }
+
+        /// <summary>
+        /// 学校Id
+        /// </summary>
+        public int? SchoolId { get; set; }
+    }
+
+    /// <summary>
+    /// 学生查询
+    /// </summary>
+    public class StudentQueryInput : StudentEntity
+    {
+        /// <summary>
+        /// 包含xx名称--后缀[Contains]
+        /// </summary>
+        public string NameContains { get; set; }
+
+        /// <summary>
+        /// 名称以xx开头--后缀[StartsWith]
+        /// </summary>
+        public string NameStartsWith { get; set; }
+
+        /// <summary>
+        /// 名称以xx结尾--后缀[EndsWith]
+        /// </summary>
+        public string NameEndsWith { get; set; }
+
+        /// <summary>
+        /// 集合包含---后缀[_Contains]
+        /// </summary>
+        public List<string> Name_Contains { get; set; }
+
+        /// <summary>
+        /// 集合包含---后缀[_Contains]
+        /// </summary>
+        public string[] Code_Contains { get; set; }
+
+        /// <summary>
+        /// 集合包含---后缀[_Contains]
+        /// </summary>
+        public IEnumerable<string> CreateUserId_Contains { get; set; }
+
+        /// <summary>
+        /// 集合包含---后缀[_Contains]
+        /// </summary>
+        public int?[] Age_Contains { get; set; }
+
+        /// <summary>
+        /// 集合包含---后缀[_Contains]
+        /// </summary>
+        public IEnumerable<int?> Sex_Contains { get; set; }
+
+        /// <summary>
+        /// 错误示范 实体定义的是int? 这边定义int 是不行的.
+        /// </summary>
+        //public List<int> Age_Contains { get; set; }
+    }
+```
+
+5. 注册 ORM-SqlSugar、BaseQuery-BaseDynamicExpression
+``` C#
+builder.Services.AddTransient(typeof(BaseDynamicExpression<,>));
+builder.Services.AddSingleton<ISqlSugarClient>(_ => new SqlSugarScope(new ConnectionConfig()
+{
+    //ConfigId="db01"  多租户用到
+    ConnectionString = builder.Configuration.GetConnectionString("mysql"),
+    DbType = DbType.MySql,
+    IsAutoCloseConnection = true//自动释放
+}, db =>
+{
+    //单例参数配置，所有上下文生效
+    db.Aop.OnLogExecuting = (sql, pars) =>
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            Console.WriteLine($"{sql};\r\n 参数:{string.Join(';', pars.Select(t => $"{t.ParameterName }={t.Value}"))}");//输出sql
+        }
+    };
+}));
+```
+6. 添加学生Controller,
+- 方法`GetQueryable`是BaseQuery的封装使用.
+- `GetEntityListAsync`,这边直接返回Sql.
+- 所有的查询都在`StudentQueryInput`管控.
+- 四不四很简单.后面还可以配合多表使用.
+``` C#
+    /// <summary>
+    /// 学生
+    /// </summary>
+    [ApiController]
+    [Route("[controller]")]
+    public class StudentController : ControllerBase
+    {
+        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly BaseDynamicExpression<StudentEntity, StudentQueryInput> _expression;
+        private readonly ISqlSugarClient _db;
+
+        public StudentController(ILogger<WeatherForecastController> logger,
+            BaseDynamicExpression<StudentEntity, StudentQueryInput> expression,
+            ISqlSugarClient db)
+        {
+            _logger = logger;
+            _expression = expression;
+            _db = db;
+        }
+
+        [HttpPost(Name = "GetEntityList")]
+        public KeyValuePair<string, List<SugarParameter>> GetEntityListAsync(StudentQueryInput input)
+        {
+            return this.GetQueryable(input).ToSql();
+        }
+
+        private ISugarQueryable<StudentEntity> GetQueryable(StudentQueryInput input)
+        {
+            var res = _expression.GetExpression(input);
+            return _db.Queryable<StudentEntity>().WhereIF(res.Condition, res.Expression);
+        }
+    }
+```
+
+##### 完整封装实例
+
 3.  以SqlSugar为例
 ``` C#
         /// <summary>
