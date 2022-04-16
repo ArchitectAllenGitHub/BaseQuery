@@ -5,19 +5,15 @@ QueryBase 可以结合多款ORM框架使用.如果你为重复的写着ORM的查
 
 #### 使用说明
 ##### QuickStart
-1.添加包源地址
-``` shell
-https://www.myget.org/F/basequery/api/v3/index.json
-```
-2.  引用nuget
+1.  引用nuget
 ``` shell
 dotnet add package BaseQuery
 ```
-3. 添加ORM,以SqlSugar为例
+2. 添加ORM,以SqlSugar为例
 ``` shell
 dotnet add package SqlSugarCore
 ```
-4.添加如下实体
+3. 添加如下实体
 ``` C#
     /// <summary>
     /// 学生实体
@@ -104,7 +100,7 @@ dotnet add package SqlSugarCore
     }
 ```
 
-5. 注册 ORM-SqlSugar、BaseQuery-BaseDynamicExpression
+4. 注册 ORM-SqlSugar、BaseQuery-BaseDynamicExpression
 ``` C#
 builder.Services.AddTransient(typeof(BaseDynamicExpression<,>));
 builder.Services.AddSingleton<ISqlSugarClient>(_ => new SqlSugarScope(new ConnectionConfig()
@@ -115,7 +111,7 @@ builder.Services.AddSingleton<ISqlSugarClient>(_ => new SqlSugarScope(new Connec
     IsAutoCloseConnection = true//自动释放
 }));
 ```
-6. 添加学生Controller,
+5. 添加学生Controller,
 - 方法`GetQueryable`是BaseQuery的封装使用.
 - `GetEntityListAsync`,这边直接返回Sql.
 - 所有的查询都在`StudentQueryInput`管控.
@@ -157,7 +153,7 @@ builder.Services.AddSingleton<ISqlSugarClient>(_ => new SqlSugarScope(new Connec
 - [QuickStart源码](https://gitee.com/ArchitectAllen/base-query-quick-start)
 ##### 完整封装示例
 
-3.  以SqlSugar为例
+ 以SqlSugar为例
 ``` C#
         /// <summary>
         /// [单表]获取集合
