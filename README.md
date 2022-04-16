@@ -113,16 +113,6 @@ builder.Services.AddSingleton<ISqlSugarClient>(_ => new SqlSugarScope(new Connec
     ConnectionString = builder.Configuration.GetConnectionString("mysql"),
     DbType = DbType.MySql,
     IsAutoCloseConnection = true//自动释放
-}, db =>
-{
-    //单例参数配置，所有上下文生效
-    db.Aop.OnLogExecuting = (sql, pars) =>
-    {
-        if (builder.Environment.IsDevelopment())
-        {
-            Console.WriteLine($"{sql};\r\n 参数:{string.Join(';', pars.Select(t => $"{t.ParameterName }={t.Value}"))}");//输出sql
-        }
-    };
 }));
 ```
 6. 添加学生Controller,
