@@ -154,7 +154,7 @@ builder.Services.AddSingleton<ISqlSugarClient>(_ => new SqlSugarScope(new Connec
         }
     }
 ```
-
+- [QuickStart源码](https://gitee.com/ArchitectAllen/base-query-quick-start)
 ##### 完整封装示例
 
 3.  以SqlSugar为例
