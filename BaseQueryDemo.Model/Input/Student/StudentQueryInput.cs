@@ -78,5 +78,10 @@ namespace BaseQueryDemo.Model.Input
         /// 学校地址
         /// </summary>
         public string SchoolAdress { get; set; }
+
+        /// <summary>
+        /// ID 大于
+        /// </summary>
+        public int? IdGreaterThan { get; set; }
     }
 }

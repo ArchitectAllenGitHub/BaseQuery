@@ -1,8 +1,10 @@
-﻿using AllenDynamicExpressions.Expressions;
+﻿using AllenDynamicExpressions.Consts;
+using AllenDynamicExpressions.Expressions;
 using AllenDynamicExpressions.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace AllenDynamicExpressions
 {
@@ -66,6 +68,9 @@ namespace AllenDynamicExpressions
                     case ExpressionType.Call:
                         expression = CallExpression<T>.Generate(item, value);
                         break;
+                    case ExpressionType.GreaterThan:
+                        expression = CallExpression<T>.Generate(item, value);
+                        break;
                     case ExpressionType.Equal:
                     default:
                         expression = EqualTypeExpression<T>.Generate(item, value);
@@ -94,6 +99,7 @@ namespace AllenDynamicExpressions
                         IPropertyInfo = property,
                         ExpressionType = ExpressionType.Equal
                     };
+
                     AllenRuleValidation.Mapping<T, I>(info);
 
                     if (info.TPropertyInfo != null)
@@ -110,6 +116,8 @@ namespace AllenDynamicExpressions
 
                 }
         }
+
+
 
         /// <summary>
         /// 拼装查询条件

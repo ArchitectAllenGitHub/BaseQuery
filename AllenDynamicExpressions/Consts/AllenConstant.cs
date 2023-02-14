@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,26 @@ namespace AllenDynamicExpressions.Consts
         /// 以xx结尾
         /// </summary>
         public const string EndsWith = "EndsWith";
+
+        /// <summary>
+        /// 小于
+        /// </summary>
+        public const string LessThan = nameof(ExpressionType.LessThan);
+
+        /// <summary>
+        /// 小于等于
+        /// </summary>
+        public const string LessThanOrEqual = nameof(ExpressionType.LessThanOrEqual);
+
+        /// <summary>
+        /// 大于
+        /// </summary>
+        public const string GreaterThan = nameof(ExpressionType.GreaterThan);
+
+        /// <summary>
+        /// 大于等于
+        /// </summary>
+        public const string GreaterThanOrEqual = nameof(ExpressionType.GreaterThanOrEqual);
 
         /// <summary>
         /// 字符串类型

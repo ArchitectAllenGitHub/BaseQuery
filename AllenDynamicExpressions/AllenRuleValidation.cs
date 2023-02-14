@@ -56,6 +56,24 @@ namespace AllenDynamicExpressions
                     }
                 }
             }
+            else if (i.PropertyType == typeof(int?))
+            {
+                var type = GetExpressionType(input.IPropertyInfo);
+
+                if (type != null)
+                {
+                    input.ExpressionType = type.Value;
+                    input.Method = input.ExpressionType.ToString();
+                    input.TPropertyInfo = typeof(T).GetProperty(i.Name.SplitEnd(input.Method));
+                    if (input.TPropertyInfo != null)
+                    {
+                        if (i.PropertyType != input.TPropertyInfo.PropertyType)
+                            throw ExceptionMessage.ExceptionPropertyTypeInconsistency4<T, I>(input.TPropertyInfo.Name, i.Name);
+                    }
+                }
+
+                return;
+            }
 
             if (i.Name.EndsWith(AllenConstant._Contains))
             {
@@ -77,6 +95,36 @@ namespace AllenDynamicExpressions
             }
 
             return;
+        }
+
+        /// <summary>
+        /// 获取表达式目录树类型
+        /// </summary>
+        /// <param name="propertyInfo"></param>
+        /// <returns></returns>
+        public static ExpressionType? GetExpressionType(PropertyInfo propertyInfo)
+        {
+            if (propertyInfo.Name.EndsWith(AllenConstant.LessThan))
+            {
+                return ExpressionType.LessThan;
+            }
+            else if (propertyInfo.Name.EndsWith(AllenConstant.GreaterThan))
+            {
+                return ExpressionType.GreaterThan;
+            }
+            else if (propertyInfo.Name.EndsWith(AllenConstant.LessThanOrEqual))
+            {
+                return ExpressionType.LessThanOrEqual;
+            }
+            else if (propertyInfo.Name.EndsWith(AllenConstant.GreaterThanOrEqual))
+            {
+                return ExpressionType.GreaterThanOrEqual;
+            }
+            else
+            {
+                return default;
+            }
+
         }
 
         /// <summary>
