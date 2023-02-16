@@ -68,6 +68,11 @@ namespace AllenDynamicExpressions.Consts
         public const string GreaterThanOrEqual = nameof(ExpressionType.GreaterThanOrEqual);
 
         /// <summary>
+        /// 不等于
+        /// </summary>
+        public const string NotEqual = nameof(ExpressionType.NotEqual);
+
+        /// <summary>
         /// 字符串类型
         /// </summary>
         public static List<string> StringTypes = new List<string>()
@@ -75,6 +80,7 @@ namespace AllenDynamicExpressions.Consts
             Contains,
             StartsWith,
             EndsWith,
+            NotEqual,
         };
     }
 }

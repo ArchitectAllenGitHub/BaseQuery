@@ -29,21 +29,9 @@ namespace AllenDynamicExpressions.Expressions
                     return StringContains(cacheInfo, iValue);
                 case AllenConstant._Contains:
                     return CollectionContains(cacheInfo, iValue);
-                case AllenConstant.GreaterThan:
-                    return GreaterThan(cacheInfo, iValue);
                 default:
                     throw new NotImplementedException(cacheInfo.Value.Method);
             }
-        }
-
-        /// <summary>
-        /// 大于
-        /// </summary>
-        /// <param name="cacheInfo"></param>
-        /// <param name="iValue"></param>
-        private static Expression<Func<T, bool>> GreaterThan(KeyValuePair<string, ChachePropertyInfo> cacheInfo, object iValue)
-        {
-
         }
 
         /// <summary>

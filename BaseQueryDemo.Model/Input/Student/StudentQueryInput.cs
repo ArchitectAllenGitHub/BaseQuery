@@ -83,5 +83,30 @@ namespace BaseQueryDemo.Model.Input
         /// ID 大于
         /// </summary>
         public int? IdGreaterThan { get; set; }
+
+        /// <summary>
+        /// ID 大于等于
+        /// </summary>
+        public int? IdGreaterThanOrEqual { get; set; }
+
+        /// <summary>
+        /// ID 小于
+        /// </summary>
+        public int? IdLessThan { get; set; }
+
+        /// <summary>
+        /// ID 小于等于
+        /// </summary>
+        public int? IdLessThanOrEqual { get; set; }
+
+        /// <summary>
+        /// ID 不等于
+        /// </summary>
+        public int? IdNotEqual { get; set; }
+
+        /// <summary>
+        /// SchoolAdress 不等于
+        /// </summary>
+        public string NameNotEqual { get; set; }
     }
 }

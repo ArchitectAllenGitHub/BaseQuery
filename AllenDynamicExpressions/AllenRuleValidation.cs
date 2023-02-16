@@ -47,6 +47,9 @@ namespace AllenDynamicExpressions
                         input.Method = item;
                         input.TPropertyInfo = typeof(T).GetProperty(i.Name.SplitEnd(item));
 
+                        if (item == AllenConstant.NotEqual)
+                            input.ExpressionType = GetExpressionType(input.IPropertyInfo).Value;
+
                         if (input.TPropertyInfo != null)
                         {
                             if (i.PropertyType != input.TPropertyInfo.PropertyType)
@@ -108,23 +111,26 @@ namespace AllenDynamicExpressions
             {
                 return ExpressionType.LessThan;
             }
-            else if (propertyInfo.Name.EndsWith(AllenConstant.GreaterThan))
-            {
-                return ExpressionType.GreaterThan;
-            }
             else if (propertyInfo.Name.EndsWith(AllenConstant.LessThanOrEqual))
             {
                 return ExpressionType.LessThanOrEqual;
+            }
+            else if (propertyInfo.Name.EndsWith(AllenConstant.GreaterThan))
+            {
+                return ExpressionType.GreaterThan;
             }
             else if (propertyInfo.Name.EndsWith(AllenConstant.GreaterThanOrEqual))
             {
                 return ExpressionType.GreaterThanOrEqual;
             }
+            else if (propertyInfo.Name.EndsWith(AllenConstant.NotEqual))
+            {
+                return ExpressionType.NotEqual;
+            }
             else
             {
                 return default;
             }
-
         }
 
         /// <summary>

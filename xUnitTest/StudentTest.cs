@@ -55,17 +55,22 @@ namespace xUnitTest
         /// ¥Û”⁄≤‚ ‘
         /// </summary>
         [Theory]
-        [InlineData(2)]
-        public void TestGreaterThanStudent(int? idGreaterThan)
+        [InlineData(1, 2, 3, 4, 5, "√˚≥∆")]
+        public void TestGreaterThanStudent(int? idGreaterThan, int idGreaterThanOrEqual, int idLessThan, int idLessThanOrEqual, int idNotEqual, string nameNotEqual)
         {
             var input = new StudentQueryInput
             {
-                IdGreaterThan = idGreaterThan
+                IdGreaterThan = idGreaterThan,
+                IdGreaterThanOrEqual = idGreaterThanOrEqual,
+                IdLessThan = idLessThan,
+                IdLessThanOrEqual = idLessThanOrEqual,
+                IdNotEqual = idNotEqual,
+                NameNotEqual = nameNotEqual
             };
             var res = _baseDynamic.GetExpression(input);
             var sql = _sqlSugarClient.Queryable<StudentEntity>().WhereIF(res.Condition, res.Expression).ToSql();
 
-            Assert.Equal("SELECT `Name`,`Code`,`Age`,`Sex`,`SchoolId`,`Id`,`CreateDate`,`CreateUserId`,`UpdateDate`,`UpdateUserId` FROM `Student`  WHERE (((((( `Name` = @Name0 ) AND ( `Code` = @Code1 )) AND ( `Age` = @Age2 )) AND ( `SchoolId` = @SchoolId3 )) AND ( `CreateDate` = @CreateDate4 )) AND ( `CreateUserId` = @CreateUserId5 )) ", sql.Key);
+            Assert.Equal("SELECT `Name`,`Code`,`CreateUserId`,`Id`,`Age`,`Sex`,`SchoolId`,`CreateDate`,`UpdateDate`,`UpdateUserId` FROM `Student`  WHERE (((((( `Id` > @Id0 ) AND ( `Id` >= @Id1 )) AND ( `Id` < @Id2 )) AND ( `Id` <= @Id3 )) AND ( `Id` <> @Id4 )) AND ( `Name` <> @Name5 )) ", sql.Key);
         }
 
         /// <summary>

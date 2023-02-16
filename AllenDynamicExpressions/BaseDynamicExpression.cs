@@ -69,7 +69,19 @@ namespace AllenDynamicExpressions
                         expression = CallExpression<T>.Generate(item, value);
                         break;
                     case ExpressionType.GreaterThan:
-                        expression = CallExpression<T>.Generate(item, value);
+                        expression = GreaterThanExpression<T>.Generate(item, value);
+                        break;
+                    case ExpressionType.GreaterThanOrEqual:
+                        expression = GreaterThanOrEqual<T>.Generate(item, value);
+                        break;
+                    case ExpressionType.LessThan:
+                        expression = LessThan<T>.Generate(item, value);
+                        break;
+                    case ExpressionType.LessThanOrEqual:
+                        expression = LessThanOrEqual<T>.Generate(item, value);
+                        break;
+                    case ExpressionType.NotEqual:
+                        expression = NotEqual<T>.Generate(item, value);
                         break;
                     case ExpressionType.Equal:
                     default:
@@ -96,11 +108,13 @@ namespace AllenDynamicExpressions
                 {
                     var info = new ChachePropertyInfo
                     {
-                        IPropertyInfo = property,
-                        ExpressionType = ExpressionType.Equal
+                        IPropertyInfo = property
                     };
 
                     AllenRuleValidation.Mapping<T, I>(info);
+
+                    if (info.ExpressionType == default)
+                        info.ExpressionType = ExpressionType.Equal;
 
                     if (info.TPropertyInfo != null)
                     {
@@ -116,8 +130,6 @@ namespace AllenDynamicExpressions
 
                 }
         }
-
-
 
         /// <summary>
         /// 拼装查询条件
