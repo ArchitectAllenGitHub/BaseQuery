@@ -14,9 +14,9 @@
 		<PackageProjectUrl></PackageProjectUrl>
 		<RepositoryUrl>https://gitee.com/ArchitectAllen/base-query.git</RepositoryUrl>
 		<RepositoryType>gitee</RepositoryType>
-		<AssemblyVersion>1.0.2</AssemblyVersion>
-		<FileVersion>1.0.2</FileVersion>
-		<Version>1.1.0</Version>
+		<AssemblyVersion>1.1.1</AssemblyVersion>
+		<FileVersion>1.1.1</FileVersion>
+		<Version>1.1.1</Version>
 	</PropertyGroup>
 
 </Project>
