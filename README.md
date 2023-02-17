@@ -208,7 +208,18 @@ builder.Services.AddSingleton<ISqlSugarClient>(_ => new SqlSugarScope(new Connec
 #### 查询实体命名规范说明
 - 首先,正确的Linq查询,是建立在类型一致的基础上的.所以关联的字段,类型必须一致
 - `=`:名称类型一致
-- `Contains(Like)`:类型一致+后缀`Contains`
+- 小于(<):名称相同+入参字段后缀`LessThan`
+> 查询实体属性: public int IdLessThan { get; set; }
+- 小于等于(<=):名称相同+入参字段后缀`LessThanOrEqual`
+> 查询实体属性: public int IdLessThanOrEqual { get; set; }
+- 大于(>):名称相同+入参字段后缀`GreaterThan`
+> 查询实体属性: public int IdGreaterThan { get; set; }
+- 大于等于(>=):名称相同+入参字段后缀`GreaterThanOrEqual`
+> 查询实体属性: public int IdGreaterThanOrEqual { get; set; }
+- 不等于(<>/!=):名称相同+入参字段后缀`NotEqual`
+> 查询实体属性: public int IdNotEqual { get; set; }
+public string NameNotEqual { get; set; }
+- `Contains(Like)`:类型一致+名称相同+后缀`Contains`
 - `StartsWith`:名称相同+入参字段后缀`StartsWith`
 - `EndsWith`:名称相同+入参字段后缀`EndsWith`
 - 集合(IN): 名称相同+入参字段后缀`_Contains`

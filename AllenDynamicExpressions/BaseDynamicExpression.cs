@@ -1,8 +1,10 @@
-﻿using AllenDynamicExpressions.Expressions;
+﻿using AllenDynamicExpressions.Consts;
+using AllenDynamicExpressions.Expressions;
 using AllenDynamicExpressions.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace AllenDynamicExpressions
 {
@@ -66,6 +68,21 @@ namespace AllenDynamicExpressions
                     case ExpressionType.Call:
                         expression = CallExpression<T>.Generate(item, value);
                         break;
+                    case ExpressionType.GreaterThan:
+                        expression = GreaterThanExpression<T>.Generate(item, value);
+                        break;
+                    case ExpressionType.GreaterThanOrEqual:
+                        expression = GreaterThanOrEqual<T>.Generate(item, value);
+                        break;
+                    case ExpressionType.LessThan:
+                        expression = LessThan<T>.Generate(item, value);
+                        break;
+                    case ExpressionType.LessThanOrEqual:
+                        expression = LessThanOrEqual<T>.Generate(item, value);
+                        break;
+                    case ExpressionType.NotEqual:
+                        expression = NotEqual<T>.Generate(item, value);
+                        break;
                     case ExpressionType.Equal:
                     default:
                         expression = EqualTypeExpression<T>.Generate(item, value);
@@ -82,19 +99,17 @@ namespace AllenDynamicExpressions
         /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="t"></param>
+        /// <param name="i">input入参</param>
+        /// <param name="t">实体</param>
         private static void Init()
         {
             if (_Chache.PropertyInfoChache.Count == 0)
                 foreach (var property in typeof(I).GetProperties())
                 {
-                    var info = new ChachePropertyInfo
+                    var info = AllenRuleValidation.Mapping<T, I>(new ChachePropertyInfo
                     {
-                        IPropertyInfo = property,
-                        ExpressionType = ExpressionType.Equal
-                    };
-                    AllenRuleValidation.Mapping<T, I>(info);
+                        IPropertyInfo = property
+                    });
 
                     if (info.TPropertyInfo != null)
                     {
@@ -107,7 +122,6 @@ namespace AllenDynamicExpressions
 
                         _Chache.PropertyInfoChache.Add(property.Name, info);
                     }
-
                 }
         }
 
