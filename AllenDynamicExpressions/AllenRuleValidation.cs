@@ -90,7 +90,7 @@ namespace AllenDynamicExpressions
                 input.TPropertyInfo = typeof(T).GetProperty(i.Name.SplitEnd(AllenConstant._Contains));
                 input.ExpressionType = ExpressionType.Call;
 
-                CheckICollectionType(input);
+                CheckICollectionType<T, I>(input);
             }
 
             return input;
