@@ -24,19 +24,21 @@ namespace AllenDynamicExpressions
         /// <typeparam name="T"></typeparam>
         /// <param name="inputName"></param>
         /// <returns></returns>
-        public static void Mapping<T, I>(ChachePropertyInfo input)
+        public static ChachePropertyInfo Mapping<T, I>(ChachePropertyInfo input)
         {
+            //Input中的属性
             var i = input.IPropertyInfo;
             input.TPropertyInfo = typeof(T).GetProperty(i.Name);
 
+            //如果名称一致,等于
             if (input.TPropertyInfo != null)
             {
                 if (i.PropertyType != input.TPropertyInfo.PropertyType)
                     throw ExceptionMessage.ExceptionPropertyTypeInconsistency4<T, I>(input.TPropertyInfo.Name, i.Name);
-                return;
-            }
 
-            input.ExpressionType = ExpressionType.Call;
+                input.ExpressionType = ExpressionType.Equal;
+                return input;
+            }
 
             if (i.PropertyType == typeof(string))
             {
@@ -49,13 +51,17 @@ namespace AllenDynamicExpressions
 
                         if (item == AllenConstant.NotEqual)
                             input.ExpressionType = GetExpressionType(input.IPropertyInfo).Value;
+                        else
+                        {
+                            input.ExpressionType = ExpressionType.Call;
+                        }
 
                         if (input.TPropertyInfo != null)
                         {
                             if (i.PropertyType != input.TPropertyInfo.PropertyType)
                                 throw ExceptionMessage.ExceptionPropertyTypeInconsistency4<T, I>(input.TPropertyInfo.Name, i.Name);
                         }
-                        return;
+                        return input;
                     }
                 }
             }
@@ -75,29 +81,19 @@ namespace AllenDynamicExpressions
                     }
                 }
 
-                return;
+                return input;
             }
 
             if (i.Name.EndsWith(AllenConstant._Contains))
             {
                 input.Method = AllenConstant._Contains;
                 input.TPropertyInfo = typeof(T).GetProperty(i.Name.SplitEnd(AllenConstant._Contains));
+                input.ExpressionType = ExpressionType.Call;
 
-                if (input.TPropertyInfo != null)
-                {
-                    if (i.PropertyType.IsArray)
-                    {
-                        MappingArray<T, I>(input);
-                    }
-
-                    if (i.PropertyType.IsGenericType)
-                    {
-                        MappingGeneric<T, I>(input);
-                    }
-                }
+                CheckICollectionType(input);
             }
 
-            return;
+            return input;
         }
 
         /// <summary>
@@ -134,7 +130,29 @@ namespace AllenDynamicExpressions
         }
 
         /// <summary>
-        /// 映射泛型
+        /// 校验集合类型和实体属性类型是否一致
+        /// </summary>
+        /// <param name="input"></param>
+        public static void CheckICollectionType<T, I>(ChachePropertyInfo input)
+        {
+            if (input.TPropertyInfo == null)
+            {
+                return;
+            }
+
+            if (input.IPropertyInfo.PropertyType.IsArray)
+            {
+                MappingArray<T, I>(input);
+            }
+
+            if (input.IPropertyInfo.PropertyType.IsGenericType)
+            {
+                MappingGeneric<T, I>(input);
+            }
+        }
+
+        /// <summary>
+        /// 映射泛型,类型校验
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="I"></typeparam>
@@ -148,7 +166,7 @@ namespace AllenDynamicExpressions
         }
 
         /// <summary>
-        /// 映射数组
+        /// 映射数组,类型校验
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="I"></typeparam>

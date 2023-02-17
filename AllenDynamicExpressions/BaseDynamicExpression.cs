@@ -99,22 +99,17 @@ namespace AllenDynamicExpressions
         /// <summary>
         /// 初始化
         /// </summary>
-        /// <param name="i"></param>
-        /// <param name="t"></param>
+        /// <param name="i">input入参</param>
+        /// <param name="t">实体</param>
         private static void Init()
         {
             if (_Chache.PropertyInfoChache.Count == 0)
                 foreach (var property in typeof(I).GetProperties())
                 {
-                    var info = new ChachePropertyInfo
+                    var info = AllenRuleValidation.Mapping<T, I>(new ChachePropertyInfo
                     {
                         IPropertyInfo = property
-                    };
-
-                    AllenRuleValidation.Mapping<T, I>(info);
-
-                    if (info.ExpressionType == default)
-                        info.ExpressionType = ExpressionType.Equal;
+                    });
 
                     if (info.TPropertyInfo != null)
                     {
@@ -127,7 +122,6 @@ namespace AllenDynamicExpressions
 
                         _Chache.PropertyInfoChache.Add(property.Name, info);
                     }
-
                 }
         }
 
