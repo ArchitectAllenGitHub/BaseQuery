@@ -18,7 +18,7 @@ namespace xUnitTest
             services.AddTransient<ISqlSugarClient>(_ => new SqlSugarScope(new ConnectionConfig()
             {
                 //ConfigId="db01"  多租户用到
-                ConnectionString = "Server=172.25.184.123;Database=SqlSugarDemo;Uid=root;Pwd=123456;",
+                ConnectionString = "Server=sh-cdb-1i8sgoo8.sql.tencentcdb.com;Database=fangxingdev;Uid=developer;Pwd=kksdrr4597#(;Port=60811;",
                 DbType = DbType.MySql,
                 IsAutoCloseConnection = true//自动释放
             }));
@@ -46,42 +46,42 @@ namespace xUnitTest
         /// </summary>
         public static void CreateDatabase(ISqlSugarClient db)
         {
-            db.DbMaintenance.CreateDatabase();
-            db.CodeFirst.SetStringDefaultLength(200).InitTables(typeof(StudentEntity));
-            db.CodeFirst.SetStringDefaultLength(200).InitTables(typeof(SchoolEntity));
+            //db.DbMaintenance.CreateDatabase();
+            //db.CodeFirst.SetStringDefaultLength(200).InitTables(typeof(StudentEntity));
+            //db.CodeFirst.SetStringDefaultLength(200).InitTables(typeof(SchoolEntity));
 
-            if (!db.Queryable<SchoolEntity>().Any())
-            {
-                SchoolEntity input = new SchoolEntity
-                {
-                    Name = "XX第一小学",
-                    Code = 1,
-                    CreateDate = new DateTime(2022, 03, 20, 14, 40, 14),
-                    CreateUserId = "123",
-                    UpdateDate = new DateTime(2022, 03, 20, 14, 40, 14),
-                    UpdateUserId = "123",
-                    Adress="xxx",
-                    Category=SchoolCategoryEnum.PrimarySchool,
-                };
-                db.Insertable(input).ExecuteCommand();
-            }
+            //if (!db.Queryable<SchoolEntity>().Any())
+            //{
+            //    SchoolEntity input = new SchoolEntity
+            //    {
+            //        Name = "XX第一小学",
+            //        Code = 1,
+            //        CreateDate = new DateTime(2022, 03, 20, 14, 40, 14),
+            //        CreateUserId = "123",
+            //        UpdateDate = new DateTime(2022, 03, 20, 14, 40, 14),
+            //        UpdateUserId = "123",
+            //        Adress="xxx",
+            //        Category=SchoolCategoryEnum.PrimarySchool,
+            //    };
+            //    db.Insertable(input).ExecuteCommand();
+            //}
 
-            if (!db.Queryable<StudentEntity>().Any())
-            {
-                StudentEntity input = new StudentEntity
-                {
-                    Name = "Allen",
-                    Code = "153",
-                    CreateDate = new DateTime(2022, 03, 20, 14, 40, 14),
-                    Sex = 1,
-                    CreateUserId = "123",
-                    UpdateDate = new DateTime(2022, 03, 20, 14, 40, 14),
-                    UpdateUserId = "123",
-                    SchoolId = 1,
-                    Age = 11,
-                };
-                db.Insertable(input).ExecuteCommand();
-            }
+            //if (!db.Queryable<StudentEntity>().Any())
+            //{
+            //    StudentEntity input = new StudentEntity
+            //    {
+            //        Name = "Allen",
+            //        Code = "153",
+            //        CreateDate = new DateTime(2022, 03, 20, 14, 40, 14),
+            //        Sex = 1,
+            //        CreateUserId = "123",
+            //        UpdateDate = new DateTime(2022, 03, 20, 14, 40, 14),
+            //        UpdateUserId = "123",
+            //        SchoolId = 1,
+            //        Age = 11,
+            //    };
+            //    db.Insertable(input).ExecuteCommand();
+            //}
         }
     }
 }
