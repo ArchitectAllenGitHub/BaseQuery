@@ -66,7 +66,6 @@ namespace xUnitTest
                 IdLessThanOrEqual = idLessThanOrEqual,
                 IdNotEqual = idNotEqual,
                 NameNotEqual = nameNotEqual,
-                Id = 10,
             };
             var res = _baseDynamic.GetExpression(input);
             var sql = _sqlSugarClient.Queryable<StudentEntity>().WhereIF(res.Condition, res.Expression).ToSql();
